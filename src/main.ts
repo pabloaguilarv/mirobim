@@ -99,9 +99,11 @@ const toolbar = BUI.Component.create(() => {
       </bim-toolbar-section>
       </bim-tab>
       <bim-tab label="DXF Planes" icon="">
-        <bim-toolbar-section>
-          ${MiroUI(components)}
-        </bim-toolbar-section>
+        <bim-toolbar>
+          <bim-toolbar-section>
+            ${MiroUI(components)}
+          </bim-toolbar-section>
+        </bim-toolbar>
       </bim-tab>
     </bim-tabs>
   `;
