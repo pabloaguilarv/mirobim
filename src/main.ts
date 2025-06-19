@@ -86,7 +86,9 @@ const askForFile = async (extension: string) => {
 
 const miroConnector = components.get(MiroConnector);
 miroConnector.fragments = fragments;
-await miroConnector.init();
+fragments.models.list.onItemSet.add(async () => {
+  await miroConnector.init();
+});
 
 const toolbar = BUI.Component.create(() => {
   return BUI.html`
