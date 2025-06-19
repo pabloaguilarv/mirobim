@@ -30,6 +30,8 @@ export function MiroUI(components: OBC.Components) {
   const createStickyNote = async () => {
     if (boardIdInput.value === "" || categoryToCount.value[0].length === 0)
       return;
+
+    console.log(window.location.href);
     await miroConnector.createStickyNote(
       boardIdInput.value,
       categoryToCount.value[0],

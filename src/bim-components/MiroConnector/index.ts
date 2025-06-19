@@ -155,8 +155,6 @@ export class MiroConnector extends OBC.Component {
       const elementsOfCategory = await model.getItemsOfCategory(category);
       const elementsCount = elementsOfCategory.length;
 
-      console.log(board);
-
       await board.createStickyNoteItem({
         data: {
           content: `There are ${elementsCount} elements that belong to the ${category} category.`,
