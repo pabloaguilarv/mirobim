@@ -43,8 +43,15 @@ appManager.grids.set("viewport", viewportGrid);
 
 components.init();
 
-const workerUrl = "/node_modules/@thatopen/fragments/dist/Worker/worker.mjs";
-const fragments = new FRAGS.FragmentsModels(workerUrl);
+const workerUrl =
+  "https://thatopen.github.io/engine_fragment/resources/worker.mjs";
+const fetchedWorker = await fetch(workerUrl);
+const workerText = await fetchedWorker.text();
+const workerFile = new File([new Blob([workerText])], "worker.mjs", {
+  type: "text/javascript",
+});
+const url = URL.createObjectURL(workerFile);
+const fragments = new FRAGS.FragmentsModels(url);
 world.camera.controls.addEventListener("update", () => fragments.update(true));
 
 fragments.models.list.onItemSet.add(({ value: model }) => {
