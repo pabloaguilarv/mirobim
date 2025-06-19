@@ -53,10 +53,29 @@ fragments.models.list.onItemSet.add(({ value: model }) => {
   fragments.update(true);
 });
 
-const fileOne = await fetch("./sample.frag");
-const ifcBufferOne = await fileOne.arrayBuffer();
+const input = document.createElement("input");
+const askForFile = async (extension: string) => {
+  const file = await new Promise<File | null>((resolve) => {
+    input.type = "file";
+    input.accept = extension;
+    input.multiple = false;
+    input.onchange = () => {
+      const filesList = input.files;
+      if (!(filesList && filesList[0])) {
+        resolve(null);
+        return;
+      }
+      const file = filesList[0];
+      resolve(file);
+    };
+    input.click();
+  });
 
-await fragments.load(ifcBufferOne, { modelId: "T1" });
+  if (!file) return;
+
+  const ifcBufferOne = await file.arrayBuffer();
+  await fragments.load(ifcBufferOne, { modelId: file.name });
+};
 
 const miroConnector = components.get(MiroConnector);
 miroConnector.fragments = fragments;
@@ -65,6 +84,15 @@ await miroConnector.init();
 const toolbar = BUI.Component.create(() => {
   return BUI.html`
     <bim-tabs floating style="justify-self: center; border-radius: 0.5rem;">
+      <bim-tab label="Load File">
+        <bim-toolbar>
+        <bim-toolbar-section>
+          <bim-button label="Load Frags" @click=${() => {
+            askForFile("frag");
+          }}></bim-button>
+        </bim-toolbar-section>
+      </bim-toolbar>
+      </bim-tab>
       <bim-tab label="DXF Planes" icon="">
         <bim-toolbar>
           ${MiroUI(components)}
