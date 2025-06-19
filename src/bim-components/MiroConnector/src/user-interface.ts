@@ -17,16 +17,14 @@ export function MiroUI(components: OBC.Components) {
     BUI.ContextMenu.removeMenus();
   });
 
-  for (const [_, categories] of Object.entries(miroConnector.categories)) {
-    for (const category of categories) {
-      const option = document.createElement("bim-option");
+  miroConnector.categories.onItemAdded.add((category: string) => {
+    const option = document.createElement("bim-option");
 
-      option.label = category;
-      option.value = category;
+    option.label = category;
+    option.value = category;
 
-      categoryToCount.append(option);
-    }
-  }
+    categoryToCount.append(option);
+  });
 
   const createStickyNote = async () => {
     if (boardIdInput.value === "" || categoryToCount.value[0].length === 0)

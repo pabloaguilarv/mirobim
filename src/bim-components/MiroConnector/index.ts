@@ -103,13 +103,14 @@
 import * as OBC from "@thatopen/components";
 import * as FRAGS from "@thatopen/fragments";
 import { MiroApi } from "@mirohq/miro-api";
+import { DataSet } from "@thatopen/components";
 
 export class MiroConnector extends OBC.Component {
   enabled = false;
   static readonly uuid = "052229cb-31c2-4c69-831f-a7da5a1cd153";
 
   miroApi: MiroApi = new MiroApi(import.meta.env.VITE_MIRO_TOKEN);
-  categories: { [key: string]: Set<string> } = {};
+  categories = new DataSet<string>();
 
   constructor(components: OBC.Components) {
     super(components);
@@ -130,18 +131,17 @@ export class MiroConnector extends OBC.Component {
   }
 
   private async getCategories() {
-    if (!this.fragments) throw new Error("MiroConnector: No Fragments Set!");
+    if (!(this.fragments && this.categories))
+      throw new Error("MiroConnector: No Fragments Set!");
 
-    for (const [modelId, model] of this.fragments.models.list) {
+    for (const [_, model] of this.fragments.models.list) {
       const itemsWithGeometry = await model.getItemsWithGeometry();
 
       for (const item of itemsWithGeometry) {
         const category = await item.getCategory();
         if (!category) continue;
-        if (!(modelId in this.categories)) {
-          this.categories[modelId] = new Set();
-        }
-        this.categories[modelId].add(category);
+        if (this.categories.has(category)) continue;
+        this.categories.add(category);
       }
     }
   }

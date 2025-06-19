@@ -54,10 +54,14 @@ const url = URL.createObjectURL(workerFile);
 const fragments = new FRAGS.FragmentsModels(url);
 world.camera.controls.addEventListener("update", () => fragments.update(true));
 
-fragments.models.list.onItemSet.add(({ value: model }) => {
+const miroConnector = components.get(MiroConnector);
+miroConnector.fragments = fragments;
+
+fragments.models.list.onItemSet.add(async ({ value: model }) => {
   model.useCamera(world.camera.three);
   world.scene.three.add(model.object);
-  fragments.update(true);
+  await fragments.update(true);
+  await miroConnector.init();
 });
 
 const input = document.createElement("input");
@@ -83,12 +87,6 @@ const askForFile = async (extension: string) => {
   const ifcBufferOne = await file.arrayBuffer();
   await fragments.load(ifcBufferOne, { modelId: file.name });
 };
-
-const miroConnector = components.get(MiroConnector);
-miroConnector.fragments = fragments;
-fragments.models.list.onItemSet.add(async () => {
-  await miroConnector.init();
-});
 
 const toolbar = BUI.Component.create(() => {
   return BUI.html`
