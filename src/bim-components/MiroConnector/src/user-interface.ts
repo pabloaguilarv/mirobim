@@ -8,6 +8,7 @@ export function MiroUI(components: OBC.Components) {
   const boardIdInput = document.createElement("bim-text-input");
   boardIdInput.label = "Board Id";
   boardIdInput.style.flex = "1";
+  boardIdInput.value = "uXjVItTNefI=";
 
   const categoryToCount = document.createElement("bim-dropdown");
   categoryToCount.label = "Category To Count";
