@@ -40,7 +40,7 @@ export function MiroUI(components: OBC.Components) {
 
   return BUI.Component.create(() => {
     return BUI.html`
-    <bim-toolbar-section style="display: flex;flex-direction: column;" label="Miro">
+    <bim-toolbar-section style="display: flex;flex-direction: column;" label="Actions">
           <div style="flex: 1;">${boardIdInput}</div>
           <div style="flex: 1;">${categoryToCount}</div>
         <bim-button style="flex: 0;" label="Create Sticky Note" @click=${createStickyNote}></bim-button>
