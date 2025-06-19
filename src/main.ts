@@ -85,16 +85,16 @@ const toolbar = BUI.Component.create(() => {
   return BUI.html`
     <bim-tabs floating style="justify-self: center; border-radius: 0.5rem;">
       <bim-tab label="Load File">
-        <bim-toolbar>
+        <bim-toolbar-section>
           <bim-button label="Load Frags" @click=${() => {
-            askForFile("frag");
+            askForFile(".frag");
           }}></bim-button>
-      </bim-toolbar>
+      </bim-toolbar-section>
       </bim-tab>
       <bim-tab label="DXF Planes" icon="">
-        <bim-toolbar>
+        <bim-toolbar-section>
           ${MiroUI(components)}
-        </bim-toolbar> 
+        </bim-toolbar-section>
       </bim-tab>
     </bim-tabs>
   `;
