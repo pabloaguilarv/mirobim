@@ -86,11 +86,9 @@ const toolbar = BUI.Component.create(() => {
     <bim-tabs floating style="justify-self: center; border-radius: 0.5rem;">
       <bim-tab label="Load File">
         <bim-toolbar>
-        <bim-toolbar-section>
           <bim-button label="Load Frags" @click=${() => {
             askForFile("frag");
           }}></bim-button>
-        </bim-toolbar-section>
       </bim-toolbar>
       </bim-tab>
       <bim-tab label="DXF Planes" icon="">
